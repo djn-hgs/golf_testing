@@ -8,13 +8,14 @@ def get_int_value(prompt, min_value=None, max_value=None, value_list=None):
 
         prompt_list = []
 
+        if min_value:
+            prompt_list.append(f'Min: {min_value}')
+        if max_value:
+            prompt_list.append(f'Max: {max_value}')
+        if value_list:
+            prompt_list.append(f'Values: {', '.join(str(v) for v in value_list)}')
+
         while getting_integer:
-            if min_value:
-                prompt_list.append(f'Min: {min_value}')
-            if max_value:
-                prompt_list.append(f'Max: {max_value}')
-            if value_list:
-                prompt_list.append(f'Values: {', '.join(str(v) for v in value_list)}')
 
             value_entered = input(f'{prompt} ({', '.join(prompt_list)}): ')
 
