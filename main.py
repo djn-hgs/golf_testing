@@ -15,6 +15,8 @@ def get_int_value(prompt, min_value=None, max_value=None, value_list=None):
         if value_list:
             prompt_list.append(f'Values: {', '.join(str(v) for v in value_list)}')
 
+        possible_value = None
+
         while getting_integer:
 
             value_entered = input(f'{prompt} ({', '.join(prompt_list)}): ')
@@ -24,6 +26,7 @@ def get_int_value(prompt, min_value=None, max_value=None, value_list=None):
                 getting_integer = False
 
             except ValueError:
+                print('Needs to be an integer')
                 getting_integer = True
 
         if min_value and possible_value < min_value:
@@ -59,7 +62,7 @@ def get_yes_or_no(prompt):
 # Get number of players from user
 
 def get_num_players():
-    return get_int_value('How many players', min_value=1)
+    return get_int_value('How many players', min_value=1, max_value=4)
 
 
 # Get number of holes from user
@@ -157,11 +160,11 @@ def play_game(num_players, player_names, course_num_holes, course_par, scores):
 # Summary of scores at the end of the game
 
 
-def end_of_round_summary(num_players, player_names, course_num_holes, course_par, scores):
+def end_of_round_summary(num_players, player_names, course_num_holes, course_par, course_scorecard):
     for player in player_names:
-        player_total = sum(scores[player])
+        player_total = sum(course_scorecard[player])
 
-        player_scores = ", ".join(str(n) for n in scores[player])
+        player_scores = ", ".join(str(n) for n in course_scorecard[player])
 
         if player_total < course_par:
             message = f'{course_par - player_total} below par'
